@@ -94,19 +94,23 @@ impl Path {
 
     pub fn debug(&self) {
         let path = self.path_vector();
+
         let mut multiplier = 1;
         let mut prefix = 0;
         let mut middle_rank = 0;
+        let mut selections = vec![];
         println!("==== {} ====", self.name);
         for p in path {
             // middle_rank = (p.local_rank * multiplier);
             middle_rank = middle_rank + (p.local_rank * multiplier);
             prefix = prefix + (p.prefix * multiplier);
-            println!("From '{}' selected '{}' ({}), rank = {} (prefix = {}, local = {})", p.node.set.name, p.selection.0, p.local_rank, (middle_rank + prefix), prefix, p.prefix);
+            let rank = middle_rank + prefix;
+            println!("From '{}' selected '{}' ({}), rank = {} (prefix = {}, local = {})", p.node.set.name, p.selection.0, p.local_rank, rank, prefix, p.prefix);
             // println!("rank = {}, rank2 = {}, prefix = {}, multiplier = {}", middle_rank + prefix, p.local_rank, prefix, multiplier);
             multiplier *= p.base;
+            selections.push(p.selection.0.to_string());
         }
-        println!("==============");
+        println!("======= ({}): {} =======", selections.join(","), (middle_rank + prefix));
     }
 }
 
