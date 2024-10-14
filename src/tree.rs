@@ -16,7 +16,7 @@ use core::ops::BitOrAssign;
 use std::rc::Rc;
 use std::time::Instant;
 
-/// A ranked tree, loosely following and And/Or structure.
+/// A ranked tree, following and And/Or structure.
 /// 
 /// Parent-child relations are rank products
 /// Sibling-sibling relations are rank sums (unions)
@@ -128,6 +128,13 @@ impl Tree {
 
 }
 
+/// A node in the tree is a ranked set.
+/// 
+/// Currently node and ranked set are not
+/// separate, but they should be. The
+/// ranked set trait should include
+/// rank/unrank and cardinality functions
+/// at minimum.
 #[derive(Clone)]
 pub struct Node {    
     pub name: String,
@@ -401,7 +408,7 @@ impl Display for Node {
 }
 
 #[derive(Clone)]
-/// A link between nodes.
+/// A parent-child link between nodes.
 /// 
 /// Parent-child links are rank products
 /// Sibling-sibling relations are rank sums (unions)
